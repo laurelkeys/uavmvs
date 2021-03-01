@@ -9,7 +9,9 @@
 #include <cassert>
 #include <iostream>
 
+#if 0
 #include "fmt/format.h"
+#endif
 
 #include "util/system.h"
 #include "util/arguments.h"
@@ -214,7 +216,13 @@ int main(int argc, char **argv) {
 
     std::size_t num_samples = sample_positions.size() * 128ull * 45ull;
 
+#if 0
     std::string task = fmt::format("Sampling 5D volume at {} positions", litos(num_samples));
+#else
+    std::string task("Sampling 5D volume at ");
+    task += litos(num_samples);
+    task += std::string(" positions");
+#endif
     ProgressCounter counter(task, sample_positions.size());
 
     #pragma omp parallel
