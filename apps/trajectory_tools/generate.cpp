@@ -268,6 +268,24 @@ int main(int argc, char **argv) {
         }
     }
 
+    /* Add five fake cameras to easily retrieve the coordinate system. */
+    std::copy(cam_rot.begin(), cam_rot.end(), cam.rot);
+    math::Vec3f trans_000 = -cam_rot * math::Vec3f(0.0f, 0.0f, 0.0f);
+    std::copy(trans_000.begin(), trans_000.end(), cam.trans);
+    trajectory.push_back(cam);
+    math::Vec3f trans_100 = -cam_rot * math::Vec3f(1.0f, 0.0f, 0.0f);
+    std::copy(trans_100.begin(), trans_100.end(), cam.trans);
+    trajectory.push_back(cam);
+    math::Vec3f trans_010 = -cam_rot * math::Vec3f(0.0f, 1.0f, 0.0f);
+    std::copy(trans_010.begin(), trans_010.end(), cam.trans);
+    trajectory.push_back(cam);
+    math::Vec3f trans_001 = -cam_rot * math::Vec3f(0.0f, 0.0f, 1.0f);
+    std::copy(trans_001.begin(), trans_001.end(), cam.trans);
+    trajectory.push_back(cam);
+    math::Vec3f trans_111 = -cam_rot * math::Vec3f(1.0f, 1.0f, 1.0f);
+    std::copy(trans_111.begin(), trans_111.end(), cam.trans);
+    trajectory.push_back(cam);
+
     utp::save_trajectory(trajectory, args.out_trajectory);
 
     return EXIT_SUCCESS;
