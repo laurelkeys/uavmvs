@@ -269,19 +269,32 @@ int main(int argc, char **argv) {
     }
 
     /* Add five fake cameras to easily retrieve the coordinate system. */
+    math::Matrix3f rot_xy(0.0f); rot_xy(0, 1) = -1; rot_xy(1, 0) = 1; rot_xy(2, 2) = 1;
+    math::Matrix3f rot_yz(0.0f); rot_yz(0, 0) = 1; rot_yz(1, 2) = -1; rot_yz(2, 1) = 1;
+    math::Matrix3f rot_zx(0.0f); rot_zx(0, 2) = 1; rot_zx(1, 1) = 1; rot_zx(2, 0) = -1;
+    math::Matrix3f rot_id(0.0f); rot_id(0, 0) = 1; rot_id(1, 1) = 1; rot_id(2, 2) = 1;
+
     std::copy(cam_rot.begin(), cam_rot.end(), cam.rot);
     math::Vec3f trans_000 = -cam_rot * math::Vec3f(0.0f, 0.0f, 0.0f);
     std::copy(trans_000.begin(), trans_000.end(), cam.trans);
     trajectory.push_back(cam);
+
+    std::copy(rot_yz.begin(), rot_yz.end(), cam.rot);
     math::Vec3f trans_100 = -cam_rot * math::Vec3f(1.0f, 0.0f, 0.0f);
     std::copy(trans_100.begin(), trans_100.end(), cam.trans);
     trajectory.push_back(cam);
+
+    std::copy(rot_zx.begin(), rot_zx.end(), cam.rot);
     math::Vec3f trans_010 = -cam_rot * math::Vec3f(0.0f, 1.0f, 0.0f);
     std::copy(trans_010.begin(), trans_010.end(), cam.trans);
     trajectory.push_back(cam);
+
+    std::copy(rot_xy.begin(), rot_xy.end(), cam.rot);
     math::Vec3f trans_001 = -cam_rot * math::Vec3f(0.0f, 0.0f, 1.0f);
     std::copy(trans_001.begin(), trans_001.end(), cam.trans);
     trajectory.push_back(cam);
+
+    std::copy(rot_id.begin(), rot_id.end(), cam.rot);
     math::Vec3f trans_111 = -cam_rot * math::Vec3f(1.0f, 1.0f, 1.0f);
     std::copy(trans_111.begin(), trans_111.end(), cam.trans);
     trajectory.push_back(cam);
